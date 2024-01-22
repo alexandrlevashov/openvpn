@@ -1731,7 +1731,7 @@ verify_user_pass(struct user_pass *up, struct tls_multi *multi,
             }
         }
 #endif
-        if ((session->opt->ssl_flags & SSLF_USERNAME_AS_COMMON_NAME))
+        if ( (session->opt->ssl_flags & SSLF_USERNAME_AS_COMMON_NAME) && (strlen(up->username) > 0) )
         {
             set_common_name(session, up->username);
         }
@@ -1761,7 +1761,7 @@ verify_user_pass(struct user_pass *up, struct tls_multi *multi,
         msg(D_HANDSHAKE, "TLS: Username/Password authentication %s for username '%s' %s",
             (ks->authenticated == KS_AUTH_DEFERRED) ? "deferred" : "succeeded",
             up->username,
-            (session->opt->ssl_flags & SSLF_USERNAME_AS_COMMON_NAME) ? "[CN SET]" : "");
+            ( (session->opt->ssl_flags & SSLF_USERNAME_AS_COMMON_NAME) && (strlen(up->username) > 0) ) ? "[CN SET]" : "");
     }
     else
     {
